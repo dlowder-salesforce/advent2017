@@ -1,16 +1,4 @@
-input = [];
-
-var lineReader = require('readline').createInterface({
-  input: require('fs').createReadStream('./input05.txt')
-});
-
-lineReader.on('line', function(line) {
-  input.push(parseInt(line.trim()));
-});
-
-lineReader.on('close', function() {
-  runAdvent05();
-});
+const io = require('./utils/io');
 
 var jumpfunction1 = function(input, loc) {
   var newloc = loc + input[loc];
@@ -38,9 +26,12 @@ var solution = function(input, jumpfunction) {
   return steps;
 };
 
-var runAdvent05 = function() {
+io.readInputAsLines('./input05.txt', function(inputStrings) {
+  const input = inputStrings.map(function(line) {
+    return parseInt(line.trim());
+  });
   let input1 = [...input];
   console.log(solution(input1, jumpfunction1));
   let input2 = [...input];
   console.log(solution(input2, jumpfunction2));
-};
+});

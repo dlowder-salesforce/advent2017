@@ -1,16 +1,4 @@
-input = [];
-
-var lineReader = require('readline').createInterface({
-  input: require('fs').createReadStream('./input04.txt')
-});
-
-lineReader.on('line', function(line) {
-  input.push(line.split(' '));
-});
-
-lineReader.on('close', function() {
-  runAdvent04();
-});
+const io = require('./utils/io');
 
 var passwordTest1 = function(word1, word2) {
   return word1 === word2;
@@ -29,7 +17,7 @@ var passwordTest2 = function(word1, word2) {
   );
 };
 
-var solution = function(test) {
+var solution = function(input, test) {
   var sum = 0;
   for (var i = 0; i < input.length; i++) {
     var password = input[i];
@@ -49,7 +37,10 @@ var solution = function(test) {
   return sum;
 };
 
-var runAdvent04 = function() {
-  console.log(solution(passwordTest1));
-  console.log(solution(passwordTest2));
-};
+io.readInputAsLines('./input04.txt', function(inputStrings) {
+  const input = inputStrings.map(function(line) {
+    return line.split(' ');
+  });
+  console.log(solution(input, passwordTest1));
+  console.log(solution(input, passwordTest2));
+});

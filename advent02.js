@@ -1,20 +1,4 @@
-input = [];
-
-var lineReader = require('readline').createInterface({
-  input: require('fs').createReadStream('./input02.txt')
-});
-
-lineReader.on('line', function(line) {
-  input.push(
-    line.split('\t').map(function(x) {
-      return parseInt(x);
-    })
-  );
-});
-
-lineReader.on('close', function() {
-  runAdvent02();
-});
+const io = require('./utils/io');
 
 var findDivisibleNumbersAndDivide = function(a) {
   for (var i = 0; i < a.length - 1; i++) {
@@ -29,7 +13,7 @@ var findDivisibleNumbersAndDivide = function(a) {
   return -1;
 };
 
-var solution1 = function() {
+var solution1 = function(input) {
   var sum = 0;
   for (var i = 0; i < input.length; i++) {
     var max = input[i].reduce(function(i, j) {
@@ -43,7 +27,7 @@ var solution1 = function() {
   return sum;
 };
 
-var solution2 = function() {
+var solution2 = function(input) {
   var sum = 0;
   for (var i = 0; i < input.length; i++) {
     sum += findDivisibleNumbersAndDivide(input[i]);
@@ -51,7 +35,12 @@ var solution2 = function() {
   return sum;
 };
 
-var runAdvent02 = function() {
-  console.log(solution1());
-  console.log(solution2());
-};
+io.readInputAsLines('./input02.txt', function(input) {
+  var inputArrays = input.map(function(line) {
+    return line.split('\t').map(function(x) {
+      return parseInt(x);
+    });
+  });
+  console.log(solution1(inputArrays));
+  console.log(solution2(inputArrays));
+});
