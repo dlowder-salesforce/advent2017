@@ -22,14 +22,18 @@ const solution2 = function(input) {
   return sum;
 };
 
-io.readInputAsString('./input01.txt', function(input) {
-  var inputDigits = input
-    .trim()
-    .split('')
-    .map(function(s) {
-      return parseInt(s);
-    });
-  debugger;
-  console.log(solution1(inputDigits));
-  console.log(solution2(inputDigits));
-});
+const advent01 = function() {
+  io.readInputAsString('./input01.txt', function(input) {
+    var inputDigits = input
+      .trim()
+      .split('')
+      .map(function(s) {
+        return parseInt(s);
+      });
+    console.log('Day 1:');
+    console.log(solution1(inputDigits));
+    console.log(solution2(inputDigits));
+  });
+};
+
+module.exports = advent01;

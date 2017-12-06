@@ -1,6 +1,6 @@
 const io = require('./utils/io');
 
-var findDivisibleNumbersAndDivide = function(a) {
+const findDivisibleNumbersAndDivide = function(a) {
   for (var i = 0; i < a.length - 1; i++) {
     for (var j = i + 1; j < a.length; j++) {
       var n = a[i] > a[j] ? a[i] : a[j];
@@ -13,7 +13,7 @@ var findDivisibleNumbersAndDivide = function(a) {
   return -1;
 };
 
-var solution1 = function(input) {
+const solution1 = function(input) {
   var sum = 0;
   for (var i = 0; i < input.length; i++) {
     var max = input[i].reduce(function(i, j) {
@@ -27,7 +27,7 @@ var solution1 = function(input) {
   return sum;
 };
 
-var solution2 = function(input) {
+const solution2 = function(input) {
   var sum = 0;
   for (var i = 0; i < input.length; i++) {
     sum += findDivisibleNumbersAndDivide(input[i]);
@@ -35,12 +35,17 @@ var solution2 = function(input) {
   return sum;
 };
 
-io.readInputAsLines('./input02.txt', function(input) {
-  var inputArrays = input.map(function(line) {
-    return line.split('\t').map(function(x) {
-      return parseInt(x);
+const advent02 = function() {
+  io.readInputAsLines('./input02.txt', function(input) {
+    var inputArrays = input.map(function(line) {
+      return line.split('\t').map(function(x) {
+        return parseInt(x);
+      });
     });
+    console.log('Day 2:');
+    console.log(solution1(inputArrays));
+    console.log(solution2(inputArrays));
   });
-  console.log(solution1(inputArrays));
-  console.log(solution2(inputArrays));
-});
+};
+
+module.exports = advent02;

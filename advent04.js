@@ -1,10 +1,10 @@
 const io = require('./utils/io');
 
-var passwordTest1 = function(word1, word2) {
+const passwordTest1 = function(word1, word2) {
   return word1 === word2;
 };
 
-var passwordTest2 = function(word1, word2) {
+const passwordTest2 = function(word1, word2) {
   return (
     word1
       .split('')
@@ -17,7 +17,7 @@ var passwordTest2 = function(word1, word2) {
   );
 };
 
-var solution = function(input, test) {
+const solution = function(input, test) {
   var sum = 0;
   for (var i = 0; i < input.length; i++) {
     var password = input[i];
@@ -37,10 +37,15 @@ var solution = function(input, test) {
   return sum;
 };
 
-io.readInputAsLines('./input04.txt', function(inputStrings) {
-  const input = inputStrings.map(function(line) {
-    return line.split(' ');
+const advent04 = function() {
+  io.readInputAsLines('./input04.txt', function(inputStrings) {
+    const input = inputStrings.map(function(line) {
+      return line.split(' ');
+    });
+    console.log('Day 4:');
+    console.log(solution(input, passwordTest1));
+    console.log(solution(input, passwordTest2));
   });
-  console.log(solution(input, passwordTest1));
-  console.log(solution(input, passwordTest2));
-});
+};
+
+module.exports = advent04;
