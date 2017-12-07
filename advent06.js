@@ -27,7 +27,7 @@ const iterate = function(startblocks) {
   return blocks;
 };
 
-const advent06 = function() {
+const advent06 = function(callback) {
   io.readInputAsString('./input06.txt', function(input) {
     let initialBlocks = input
       .trim()
@@ -40,19 +40,20 @@ const advent06 = function() {
     var blocks = initialBlocks;
     steps.push(blocks);
     var loopfound = false;
+    var output = 'Day 6:';
     while (!loopfound) {
       blocks = iterate(blocks);
       steps.push(blocks);
       for (var k = 0; k < steps.length - 1; k++) {
         if (equals(steps[k], blocks)) {
-          console.log('Day 6:');
-          console.log(steps.length - 1); // Part 1
-          console.log(steps.length - k - 1); // Part 2
+          output = output + ' ' + (steps.length - 1); // Part 1
+          output = output + ' ' + (steps.length - k - 1); // Part 2
           loopfound = true;
           break;
         }
       }
     }
+    callback && callback(output);
   });
 };
 

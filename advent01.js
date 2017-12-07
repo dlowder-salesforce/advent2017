@@ -22,7 +22,7 @@ const solution2 = function(input) {
   return sum;
 };
 
-const advent01 = function() {
+const advent01 = function(callback) {
   io.readInputAsString('./input01.txt', function(input) {
     var inputDigits = input
       .trim()
@@ -30,9 +30,9 @@ const advent01 = function() {
       .map(function(s) {
         return parseInt(s);
       });
-    console.log('Day 1:');
-    console.log(solution1(inputDigits));
-    console.log(solution2(inputDigits));
+    var output =
+      'Day 1: ' + solution1(inputDigits) + ' ' + solution2(inputDigits);
+    callback && callback(output);
   });
 };
 

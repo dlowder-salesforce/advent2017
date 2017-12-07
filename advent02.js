@@ -35,16 +35,16 @@ const solution2 = function(input) {
   return sum;
 };
 
-const advent02 = function() {
+const advent02 = function(callback) {
   io.readInputAsLines('./input02.txt', function(input) {
     var inputArrays = input.map(function(line) {
       return line.split('\t').map(function(x) {
         return parseInt(x);
       });
     });
-    console.log('Day 2:');
-    console.log(solution1(inputArrays));
-    console.log(solution2(inputArrays));
+    var output =
+      'Day 2: ' + solution1(inputArrays) + ' ' + solution2(inputArrays);
+    callback && callback(output);
   });
 };
 

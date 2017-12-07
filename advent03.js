@@ -68,12 +68,9 @@ const solution2 = function(input) {
   return sumOfAdjacentSquares(squares, loc);
 };
 
-const advent03 = function() {
-  console.log('Day 3:');
-  console.log(solution1(input));
-  console.log(solution2(input));
+const advent03 = function(callback) {
+  var output = 'Day 3: ' + solution1(input) + ' ' + solution2(input);
+  callback && callback(output);
 };
-
-advent03();
 
 module.exports = advent03;

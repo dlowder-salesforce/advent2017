@@ -37,14 +37,18 @@ const solution = function(input, test) {
   return sum;
 };
 
-const advent04 = function() {
+const advent04 = function(callback) {
   io.readInputAsLines('./input04.txt', function(inputStrings) {
     const input = inputStrings.map(function(line) {
       return line.split(' ');
     });
-    console.log('Day 4:');
-    console.log(solution(input, passwordTest1));
-    console.log(solution(input, passwordTest2));
+
+    var output =
+      'Day 4: ' +
+      solution(input, passwordTest1) +
+      ' ' +
+      solution(input, passwordTest2);
+    callback && callback(output);
   });
 };
 

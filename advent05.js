@@ -26,16 +26,17 @@ const solution = function(input, jumpfunction) {
   return steps;
 };
 
-const advent05 = function() {
+const advent05 = function(callback) {
   io.readInputAsLines('./input05.txt', function(inputStrings) {
     const input = inputStrings.map(function(line) {
       return parseInt(line.trim());
     });
-    console.log('Day 5:');
+    var output = 'Day 5: ';
     let input1 = [...input];
-    console.log(solution(input1, jumpfunction1));
+    output = output + solution(input1, jumpfunction1);
     let input2 = [...input];
-    console.log(solution(input2, jumpfunction2));
+    output = output + ' ' + solution(input2, jumpfunction2);
+    callback && callback(output);
   });
 };
 
