@@ -13,4 +13,13 @@ for (var i = 1; i <= 25; i++) {
     days.push(require('./advent' + ('0' + i).slice(-2)));
   } catch (e) {}
 }
-chain(days);
+
+if (process.argv && process.argv.length >= 3) {
+  if (process.argv[2] === 'all') {
+    chain(days);
+  } else {
+    days[parseInt(process.argv[2]) - 1](output => console.log(output));
+  }
+} else {
+  chain(days);
+}
