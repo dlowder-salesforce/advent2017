@@ -1,5 +1,20 @@
 const io = require('./utils/io');
 
+// Compute total weight of a subtree
+const treeweight = function(nodemap, key) {
+  const node = nodemap[key];
+  if (node.treeweight === undefined) {
+    var sum = node.weight;
+    if (node.childNodes) {
+      for (var i = 0; i < node.childNodes.length; i++) {
+        sum += treeweight(nodemap, node.childNodes[i]);
+      }
+    }
+    node.treeweight = sum;
+  }
+  return node.treeweight;
+};
+
 // Construct tree as a map
 const buildTree = function(input) {
   var nodemap = {};
@@ -40,18 +55,6 @@ const buildTree = function(input) {
   return nodemap;
 };
 
-// Compute total weight of a subtree
-const treeweight = function(nodemap, key) {
-  const node = nodemap[key];
-  var sum = node.weight;
-  if (node.childNodes) {
-    for (var i = 0; i < node.childNodes.length; i++) {
-      sum += treeweight(nodemap, node.childNodes[i]);
-    }
-  }
-  return sum;
-};
-
 // For a given node in the tree, see which child subtree (if any) has
 // a tree weight that is different from the other children
 const uniqueChild = function(nodemap, key) {
@@ -84,6 +87,7 @@ const solution2 = function(nodemap) {
   // Given that there is only one child that causes weights to
   // be out of balance, find it, starting at the root
   var key = nodemap['root'];
+  treeweight(nodemap, key); // Computes and memoizes all the subtree weights
   var uniqueChildKey = uniqueChild(nodemap, key);
   while (uniqueChildKey) {
     key = uniqueChildKey;
