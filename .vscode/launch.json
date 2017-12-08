@@ -1,0 +1,71 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run all",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["all"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 1",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["1"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 2",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["2"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 3",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["3"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 4",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["4"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 5",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["5"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 6",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["6"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 7",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["7"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 8",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["8"]
+    }
+  ]
+}
