@@ -138,21 +138,15 @@ const score = function(s) {
   return total;
 };
 
-const solution1 = function(input) {
-  let f1 = filter_cancelled_characters(input);
-  let f2 = filter_garbage(f1);
-  return score(f2.filtered_string);
-};
-
-const solution2 = function(input) {
-  let f1 = filter_cancelled_characters(input);
-  let f2 = filter_garbage(f1);
-  return f2.garbage_removed;
-};
-
 const advent09 = function(callback) {
   io.readInputAsString('./input09.txt', function(input) {
-    let output = 'Day 9: ' + solution1(input) + ' ' + solution2(input);
+    let f1 = filter_cancelled_characters(input);
+    let f2 = filter_garbage(f1);
+    let output =
+      'Day 9: ' +
+      score(f2.filtered_string) + // Part 1
+      ' ' +
+      f2.garbage_removed; // Part 2
     callback && callback(output);
   });
 };
