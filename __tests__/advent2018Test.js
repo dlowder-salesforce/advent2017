@@ -14,26 +14,41 @@ let expected_results = [
   'Day 6: 7864 1695',
   'Day 7: bsfpjtc 529',
   'Day 8: 4902 7037',
-  'Day 9: 17390 7825',
+  'Day 9: 17390 7825'
 ];
 
+let check_results = function(i, output, done) {
+  console.log(output);
+  expect(output).toBe(expected_results[i]);
+  done();
+};
+
 describe('advent tests', () => {
-  test('Run all tests', done => {
-    var responses = [];
-    let chain = function(fns) {
-      if (fns.length > 0) {
-        fns[0](function(output) {
-          responses.push(output);
-          chain(fns.slice(1));
-        });
-      } else {
-        expect(responses.length).toBe(expected_results.length);
-        for (var i = 0; i < responses.length; i++) {
-          expect(responses[i]).toBe(expected_results[i]);
-        }
-        done();
-      }
-    };
-    chain(days);
+  test('Day 1', done => {
+    days[0](output => check_results(0, output, done));
+  });
+  test('Day 2', done => {
+    days[1](output => check_results(1, output, done));
+  });
+  test('Day 3', done => {
+    days[2](output => check_results(2, output, done));
+  });
+  test('Day 4', done => {
+    days[3](output => check_results(3, output, done));
+  });
+  test('Day 5', done => {
+    days[4](output => check_results(4, output, done));
+  });
+  test('Day 6', done => {
+    days[5](output => check_results(5, output, done));
+  });
+  test('Day 7', done => {
+    days[6](output => check_results(6, output, done));
+  });
+  test('Day 8', done => {
+    days[7](output => check_results(7, output, done));
+  });
+  test('Day 9', done => {
+    days[8](output => check_results(8, output, done));
   });
 });
