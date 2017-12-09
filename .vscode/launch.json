@@ -66,6 +66,13 @@
       "name": "Day 8",
       "program": "${workspaceFolder}/index.js",
       "args": ["8"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 9",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["9"]
     }
   ]
 }
