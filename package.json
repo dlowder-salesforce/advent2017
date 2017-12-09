@@ -4,8 +4,6 @@
   "description": "Solutions for the 2018 version of adventofcode.com",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "all": "node index.js all",
     "1": "node index.js 1",
     "2": "node index.js 2",
     "3": "node index.js 3",
@@ -14,7 +12,9 @@
     "6": "node index.js 6",
     "7": "node index.js 7",
     "8": "node index.js 8",
-    "9": "node index.js 9"
+    "9": "node index.js 9",
+    "test": "jest",
+    "all": "node index.js all"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/dlowder-salesforce/advent2018/issues"
   },
-  "homepage": "https://github.com/dlowder-salesforce/advent2018#readme"
+  "homepage": "https://github.com/dlowder-salesforce/advent2018#readme",
+  "dependencies": {
+    "jest": "^21.2.1"
+  }
 }
