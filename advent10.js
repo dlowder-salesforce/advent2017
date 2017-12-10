@@ -130,18 +130,23 @@ you might encounter.
 
 const io = require('./utils/io');
 
-Array.prototype.rotate = function(n) {
-  return this.slice(n, this.length).concat(this.slice(0, n));
-};
+Object.defineProperty(Array.prototype, 'rotate_n', {
+  enumerable: false,
+  value: function rotate_n(n) {
+    return this.slice(n, this.length).concat(this.slice(0, n));
+  }
+});
 
-Array.prototype.reverse = function(n) {
-  var a = this;
-  return this.slice(0, n)
-    .map(function(s, i, a) {
-      return a[n - i - 1];
-    })
-    .concat(this.slice(n, this.length));
-};
+Object.defineProperty(Array.prototype, 'reverse_n', {
+  enumerable: false,
+  value: function reverse_n(n) {
+    return this.slice(0, n)
+      .map(function(s, i, a) {
+        return a[n - i - 1];
+      })
+      .concat(this.slice(n, this.length));
+  }
+});
 
 const generate_list = function() {
   var list = [];
@@ -171,7 +176,7 @@ const xorstring = function(list) {
         list[index + 12] ^
         list[index + 13] ^
         list[index + 14] ^
-        list[index + 15],
+        list[index + 15]
     );
   }
   return a
@@ -190,9 +195,9 @@ const solution1 = function(input) {
   var skip_size = 0;
   var newlist = list;
   for (var i = 0; i < lengths.length; i++) {
-    newlist = newlist.rotate(pos);
-    newlist = newlist.reverse(lengths[i]);
-    newlist = newlist.rotate(list.length - pos);
+    newlist = newlist.rotate_n(pos);
+    newlist = newlist.reverse_n(lengths[i]);
+    newlist = newlist.rotate_n(list.length - pos);
     pos = (pos + lengths[i] + skip_size) % list.length;
     skip_size++;
   }
@@ -212,9 +217,9 @@ const solution2 = function(input) {
   var newlist = list;
   for (var j = 0; j < 64; j++) {
     for (var i = 0; i < lengths.length; i++) {
-      newlist = newlist.rotate(pos);
-      newlist = newlist.reverse(lengths[i]);
-      newlist = newlist.rotate(list.length - pos);
+      newlist = newlist.rotate_n(pos);
+      newlist = newlist.reverse_n(lengths[i]);
+      newlist = newlist.rotate_n(list.length - pos);
       pos = (pos + lengths[i] + skip_size) % list.length;
       skip_size++;
     }
