@@ -14,6 +14,8 @@ for (var i = 1; i <= 25; i++) {
   } catch (e) {}
 }
 
+var advent10 = require('./advent10');
+
 if (process.argv && process.argv.length >= 3) {
   if (process.argv[2] === 'all') {
     chain(days);
