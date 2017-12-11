@@ -16,10 +16,11 @@ let expected_results = [
   'Day 8: 4902 7037',
   'Day 9: 17390 7825',
   'Day 10: 46600 23234babdc6afa036749cfa9b597de1b',
+  'Day 11: 722 1551'
 ];
 
 let check_results = function(i, output, done) {
-  console.log(output);
+  //console.log(output);
   expect(output).toBe(expected_results[i]);
   done();
 };
@@ -54,5 +55,8 @@ describe('advent tests', () => {
   });
   test('Day 10', done => {
     days[9](output => check_results(9, output, done));
+  });
+  test('Day 11', done => {
+    days[10](output => check_results(10, output, done));
   });
 });

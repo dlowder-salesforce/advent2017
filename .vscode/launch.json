@@ -80,6 +80,111 @@
       "name": "Day 10",
       "program": "${workspaceFolder}/index.js",
       "args": ["10"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 11",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["11"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 12",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["12"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 13",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["13"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 14",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["14"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 15",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["15"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 16",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["16"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 17",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["17"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 18",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["18"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 19",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["19"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 20",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["20"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 21",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["21"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 22",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["22"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 23",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["23"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 24",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["24"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Day 25",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["25"]
     }
   ]
 }
