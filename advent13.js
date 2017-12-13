@@ -159,6 +159,122 @@ The severity of getting caught on a layer is equal to its depth multiplied by it
 
 Given the details of the firewall you've recorded, if you leave immediately, what is the severity of your whole trip?
 
+--- Part Two ---
+
+Now, you need to pass through the firewall without being caught - easier said than done.
+
+You can't control the speed of the packet, but you can delay it any number of picoseconds. For each picosecond you delay the packet before beginning your trip, all security scanners move one step. You're not in the firewall during this time; you don't enter layer 0 until you stop delaying the packet.
+
+In the example above, if you delay 10 picoseconds (picoseconds 0 - 9), you won't get caught:
+
+State after delaying:
+ 0   1   2   3   4   5   6
+[ ] [S] ... ... [ ] ... [ ]
+[ ] [ ]         [ ]     [ ]
+[S]             [S]     [S]
+                [ ]     [ ]
+
+Picosecond 10:
+ 0   1   2   3   4   5   6
+( ) [S] ... ... [ ] ... [ ]
+[ ] [ ]         [ ]     [ ]
+[S]             [S]     [S]
+                [ ]     [ ]
+
+ 0   1   2   3   4   5   6
+( ) [ ] ... ... [ ] ... [ ]
+[S] [S]         [S]     [S]
+[ ]             [ ]     [ ]
+                [ ]     [ ]
+
+
+Picosecond 11:
+ 0   1   2   3   4   5   6
+[ ] ( ) ... ... [ ] ... [ ]
+[S] [S]         [S]     [S]
+[ ]             [ ]     [ ]
+                [ ]     [ ]
+
+ 0   1   2   3   4   5   6
+[S] (S) ... ... [S] ... [S]
+[ ] [ ]         [ ]     [ ]
+[ ]             [ ]     [ ]
+                [ ]     [ ]
+
+
+Picosecond 12:
+ 0   1   2   3   4   5   6
+[S] [S] (.) ... [S] ... [S]
+[ ] [ ]         [ ]     [ ]
+[ ]             [ ]     [ ]
+                [ ]     [ ]
+
+ 0   1   2   3   4   5   6
+[ ] [ ] (.) ... [ ] ... [ ]
+[S] [S]         [S]     [S]
+[ ]             [ ]     [ ]
+                [ ]     [ ]
+
+
+Picosecond 13:
+ 0   1   2   3   4   5   6
+[ ] [ ] ... (.) [ ] ... [ ]
+[S] [S]         [S]     [S]
+[ ]             [ ]     [ ]
+                [ ]     [ ]
+
+ 0   1   2   3   4   5   6
+[ ] [S] ... (.) [ ] ... [ ]
+[ ] [ ]         [ ]     [ ]
+[S]             [S]     [S]
+                [ ]     [ ]
+
+
+Picosecond 14:
+ 0   1   2   3   4   5   6
+[ ] [S] ... ... ( ) ... [ ]
+[ ] [ ]         [ ]     [ ]
+[S]             [S]     [S]
+                [ ]     [ ]
+
+ 0   1   2   3   4   5   6
+[ ] [ ] ... ... ( ) ... [ ]
+[S] [S]         [ ]     [ ]
+[ ]             [ ]     [ ]
+                [S]     [S]
+
+
+Picosecond 15:
+ 0   1   2   3   4   5   6
+[ ] [ ] ... ... [ ] (.) [ ]
+[S] [S]         [ ]     [ ]
+[ ]             [ ]     [ ]
+                [S]     [S]
+
+ 0   1   2   3   4   5   6
+[S] [S] ... ... [ ] (.) [ ]
+[ ] [ ]         [ ]     [ ]
+[ ]             [S]     [S]
+                [ ]     [ ]
+
+
+Picosecond 16:
+ 0   1   2   3   4   5   6
+[S] [S] ... ... [ ] ... ( )
+[ ] [ ]         [ ]     [ ]
+[ ]             [S]     [S]
+                [ ]     [ ]
+
+ 0   1   2   3   4   5   6
+[ ] [ ] ... ... [ ] ... ( )
+[S] [S]         [S]     [S]
+[ ]             [ ]     [ ]
+                [ ]     [ ]
+Because all smaller delays would get you caught, the fewest number of picoseconds you would need to delay to get through safely is 10.
+
+What is the fewest number of picoseconds that you need to delay the packet to pass through the firewall without being caught?
+
+
  */
 
 const io = require('./utils/io');
@@ -184,7 +300,7 @@ const buildRangeArray = function(input) {
   return ranges;
 };
 
-const scanner_pos = function(range, time) {
+const get_scanner_pos = function(range, time) {
   if (range < 1) {
     return -1;
   }
@@ -194,39 +310,43 @@ const scanner_pos = function(range, time) {
   if (range === 2) {
     return time % 2;
   }
-  // 1 -> [0]
-  // 2 -> [0, 1]
-  // 3 -> [0, 1, 2, 1]
-  // 4 -> [0, 1, 2, 3, 2, 1]
-  // 5 -> [0, 1, 2, 3, 4, 3, 2, 1]
-  // 6 -> [0, 1, 2, 3, 4, 5, 4, 3, 2, 1]
   var period = range > 1 ? 2 * (range - 1) : 1;
   var t = time % period;
   var pos = range - 1 - Math.abs(t - (range - 1));
   return pos;
 };
 
-const solution1 = function(input) {
-  test_scanner_pos();
-  return '';
+const severity = function(ranges, delay) {
+  var catches = [];
+  for (var t = 0; t < ranges.length; t++) {
+    if (0 === get_scanner_pos(ranges[t], t + delay)) {
+      catches.push(t);
+    }
+  }
+  var result = catches.length
+    ? catches.reduce(function(a, b, i) {
+        return a + b * ranges[b];
+      })
+    : -1;
+  return result;
 };
 
-const solution2 = function(input) {
-  return '';
+const solution1 = function(ranges) {
+  return severity(ranges, 0);
+};
+
+const solution2 = function(ranges) {
+  var i = 0;
+  while (severity(ranges, i) !== -1) {
+    i++;
+  }
+  return i;
 };
 
 const advent13 = function(callback) {
   io.readInputAsLines('./input13.txt', function(input) {
-    var testinput = ['0: 3', '1: 2', '4: 4', '6: 4'];
-    var ranges = buildRangeArray(testinput);
-    var collisions = [];
-    for (var i=0; i<ranges.length; i++) {
-      if (i === scanner_pos(ranges[i], i)) [
-        collisions.push(i);
-      ]
-    }
-    
-    let output = 'Day 13: ' + solution1(input) + ' ' + solution2(input);
+    var ranges = buildRangeArray(input);
+    let output = 'Day 13: ' + solution1(ranges) + ' ' + solution2(ranges);
     callback && callback(output);
   });
 };

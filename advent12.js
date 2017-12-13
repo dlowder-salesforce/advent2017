@@ -115,7 +115,7 @@ const solution = function(input) {
   }
   return {
     group0size: sets[0].size(),
-    ngroups: sets.length,
+    ngroups: sets.length
   };
 };
 
