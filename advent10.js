@@ -130,107 +130,12 @@ you might encounter.
 
 const io = require('./utils/io');
 
-Object.defineProperty(Array.prototype, 'rotate_n', {
-  enumerable: false,
-  value: function rotate_n(n) {
-    return this.slice(n, this.length).concat(this.slice(0, n));
-  }
-});
-
-Object.defineProperty(Array.prototype, 'reverse_n', {
-  enumerable: false,
-  value: function reverse_n(n) {
-    return this.slice(0, n)
-      .map(function(s, i, a) {
-        return a[n - i - 1];
-      })
-      .concat(this.slice(n, this.length));
-  }
-});
-
-const generate_list = function() {
-  var list = [];
-  for (var i = 0; i < 256; i++) {
-    list.push(i);
-  }
-  return list;
-};
-
-const xorstring = function(list) {
-  var a = [];
-  for (var i = 0; i < 16; i++) {
-    var index = 16 * i;
-    a.push(
-      list[index] ^
-        list[index + 1] ^
-        list[index + 2] ^
-        list[index + 3] ^
-        list[index + 4] ^
-        list[index + 5] ^
-        list[index + 6] ^
-        list[index + 7] ^
-        list[index + 8] ^
-        list[index + 9] ^
-        list[index + 10] ^
-        list[index + 11] ^
-        list[index + 12] ^
-        list[index + 13] ^
-        list[index + 14] ^
-        list[index + 15]
-    );
-  }
-  return a
-    .map(function(s) {
-      return ('0' + s.toString(16)).slice(-2);
-    })
-    .join('');
-};
-
-const solution1 = function(input) {
-  var list = generate_list();
-  var lengths = input.split(',').map(function(s) {
-    return parseInt(s);
-  });
-  var pos = 0;
-  var skip_size = 0;
-  var newlist = list;
-  for (var i = 0; i < lengths.length; i++) {
-    newlist = newlist.rotate_n(pos);
-    newlist = newlist.reverse_n(lengths[i]);
-    newlist = newlist.rotate_n(list.length - pos);
-    pos = (pos + lengths[i] + skip_size) % list.length;
-    skip_size++;
-  }
-  return newlist[0] * newlist[1];
-};
-
-const solution2 = function(input) {
-  var list = generate_list();
-  var lengths = input
-    .split('')
-    .map(function(s) {
-      return s.charCodeAt(0);
-    })
-    .concat([17, 31, 73, 47, 23]);
-  var pos = 0;
-  var skip_size = 0;
-  var newlist = list;
-  for (var j = 0; j < 64; j++) {
-    for (var i = 0; i < lengths.length; i++) {
-      newlist = newlist.rotate_n(pos);
-      newlist = newlist.reverse_n(lengths[i]);
-      newlist = newlist.rotate_n(list.length - pos);
-      pos = (pos + lengths[i] + skip_size) % list.length;
-      skip_size++;
-    }
-  }
-  return xorstring(newlist);
-};
+const { knothash1, knothash2 } = require('./utils/knothash');
 
 const advent10 = function(callback) {
   var input = '18,1,0,161,255,137,254,252,14,95,165,33,181,168,2,188';
 
-  var output = 'Day 10: ' + solution1(input) + ' ' + solution2(input);
+  var output = 'Day 10: ' + knothash1(input) + ' ' + knothash2(input);
 
   callback && callback(output);
 };
