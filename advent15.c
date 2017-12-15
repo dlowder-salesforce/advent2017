@@ -54,21 +54,17 @@ To get a significant sample, the judge would like to consider 40 million pairs.
 
 After 40 million pairs, what is the judge's final count? */
 
-const io = require('./utils/io');
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
-const solution1 = function(input) {
-  return '';
-};
-
-const solution2 = function(input) {
-  return '';
-};
-
-const advent15 = function(callback) {
-  var input1 = 65;
-  var input2 = 8921;
-  var matches = 0;
-  for (var i = 0; i < 40000000; i++) {
+// Generator A starts with 722
+// Generator B starts with 354
+int main(int argc, char **argv) {
+  long input1 = 65;
+  long input2 = 8921;
+  int matches = 0;
+  for (int i = 0; i < 40000000; i++) {
     input1 = input1 * 16807;
     while (input1 > 2147483647) {
       input1 -= 2147483647;
@@ -77,13 +73,10 @@ const advent15 = function(callback) {
     while (input2 > 2147483647) {
       input2 -= 2147483647;
     }
-    if ((input1 & 0xffff) === (input2 & 0xffff)) {
+    if ((input1 & 0xffff) == (input2 & 0xffff)) {
       matches++;
     }
+    if (i % 100000 == 0) printf("Interations = %d\n", i);
   }
-
-  let output = 'Day 15: ' + matches + ' ' + solution2(input);
-  callback && callback(output);
-};
-
-module.exports = advent15;
+  printf("Matches = %d\n", matches);
+}
