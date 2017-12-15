@@ -49,7 +49,7 @@ Given your actual key string, how many squares are used?
 
 const io = require('./utils/io');
 
-const { knothash1, knothash2 } = require('./utils/knothash');
+const { knothash } = require('./utils/knothash');
 
 const { treeset } = require('js-collections');
 
@@ -103,7 +103,7 @@ const buildgrid = function(input) {
   var result = [];
   for (var i = 0; i < 128; i++) {
     var row = [];
-    var hash = knothash2(input + '-' + i);
+    var hash = knothash(input + '-' + i);
     for (var j = 0; j < 32; j++) {
       for (var k in bits[hash[j]]) {
         row.push(bits[hash[j]][k]);
@@ -162,7 +162,7 @@ const findgroups = function(grid) {
 const solution1 = function(input) {
   var sum = 0;
   for (var i = 0; i < 128; i++) {
-    sum += hashbitcount(knothash2(input + '-' + i));
+    sum += hashbitcount(knothash(input + '-' + i));
   }
   return sum;
 };

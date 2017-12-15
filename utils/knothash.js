@@ -47,48 +47,55 @@ const xorstring = function(list) {
     .join('');
 };
 
+const one_round = function(state, lengths) {
+  var pos = state.pos;
+  var skip_size = state.skip_size;
+  var newlist = state.list;
+  for (var i = 0; i < lengths.length; i++) {
+    newlist = newlist
+      .rotate_n(pos)
+      .reverse_n(lengths[i])
+      .rotate_n(state.list.length - pos);
+    pos = (pos + lengths[i] + skip_size) % state.list.length;
+    skip_size++;
+  }
+  return {
+    pos: pos,
+    skip_size: skip_size,
+    list: newlist
+  };
+};
+
 const knothash1 = function(input) {
-  var list = Array.range(256);
   var lengths = input.split(',').map(function(s) {
     return parseInt(s);
   });
-  var pos = 0;
-  var skip_size = 0;
-  var newlist = list;
-  for (var i = 0; i < lengths.length; i++) {
-    newlist = newlist.rotate_n(pos);
-    newlist = newlist.reverse_n(lengths[i]);
-    newlist = newlist.rotate_n(list.length - pos);
-    pos = (pos + lengths[i] + skip_size) % list.length;
-    skip_size++;
-  }
-  return newlist[0] * newlist[1];
+  var state = {
+    pos: 0,
+    skip_size: 0,
+    list: Array.range(256)
+  };
+
+  state = one_round(state, lengths);
+
+  return state.list[0] * state.list[1];
 };
 
-const knothash2 = function(input) {
-  var list = Array.range(256);
+const knothash = function(input) {
   var lengths = input
     .split('')
     .map(function(s) {
       return s.charCodeAt(0);
     })
     .concat([17, 31, 73, 47, 23]);
-  var pos = 0;
-  var skip_size = 0;
-  var newlist = list;
-  for (var j = 0; j < 64; j++) {
-    for (var i = 0; i < lengths.length; i++) {
-      newlist = newlist.rotate_n(pos);
-      newlist = newlist.reverse_n(lengths[i]);
-      newlist = newlist.rotate_n(list.length - pos);
-      pos = (pos + lengths[i] + skip_size) % list.length;
-      skip_size++;
-    }
+  var state = { pos: 0, skip_size: 0, list: Array.range(256) };
+  for (var i = 0; i < 64; i++) {
+    state = one_round(state, lengths);
   }
-  return xorstring(newlist);
+  return xorstring(state.list);
 };
 
 module.exports = {
   knothash1: knothash1,
-  knothash2: knothash2
+  knothash: knothash
 };

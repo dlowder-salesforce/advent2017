@@ -130,12 +130,12 @@ you might encounter.
 
 const io = require('./utils/io');
 
-const { knothash1, knothash2 } = require('./utils/knothash');
+const { knothash1, knothash } = require('./utils/knothash');
 
 const advent10 = function(callback) {
   var input = '18,1,0,161,255,137,254,252,14,95,165,33,181,168,2,188';
 
-  var output = 'Day 10: ' + knothash1(input) + ' ' + knothash2(input);
+  var output = 'Day 10: ' + knothash1(input) + ' ' + knothash(input);
 
   callback && callback(output);
 };
