@@ -56,33 +56,37 @@ After 40 million pairs, what is the judge's final count? */
 
 const io = require('./utils/io');
 
-const solution1 = function(input) {
-  return '';
-};
-
-const solution2 = function(input) {
-  return '';
-};
-
-const advent15 = function(callback) {
-  var input1 = 65;
-  var input2 = 8921;
+const solution = function(input1, divisor1, input2, divisor2, iterations) {
+  var a = input1;
+  var b = input2;
   var matches = 0;
-  for (var i = 0; i < 40000000; i++) {
-    input1 = input1 * 16807;
-    while (input1 > 2147483647) {
-      input1 -= 2147483647;
-    }
-    input2 = input2 * 48271;
-    while (input2 > 2147483647) {
-      input2 -= 2147483647;
-    }
-    if ((input1 & 0xffff) === (input2 & 0xffff)) {
+  for (var i = 0; i < iterations; i++) {
+    do {
+      a = (a * 16807) % 0x7fffffff;
+    } while (divisor1 && a % divisor1 !== 0);
+    do {
+      b = (b * 48271) % 0x7fffffff;
+    } while (divisor2 && b % divisor2 !== 0);
+    if ((a & 0xffff) === (b & 0xffff)) {
       matches++;
     }
   }
+  return matches;
+};
 
-  let output = 'Day 15: ' + matches + ' ' + solution2(input);
+const solution1 = function(input) {
+  return solution(input[0], 0, input[1], 0, 40000000);
+};
+
+const solution2 = function(input) {
+  return solution(input[0], 4, input[1], 8, 5000000);
+};
+
+const advent15 = function(callback) {
+  // Generator A starts with 722
+  // Generator B starts with 354
+  var input = [722, 354];
+  let output = 'Day 15: ' + solution1(input) + ' ' + solution2(input);
   callback && callback(output);
 };
 
