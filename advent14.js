@@ -51,6 +51,8 @@ const io = require('./utils/io');
 
 const { knothash1, knothash2 } = require('./utils/knothash');
 
+const { treeset } = require('js-collections');
+
 const bitcounts = {
   '0': 0,
   '1': 1,
@@ -70,12 +72,91 @@ const bitcounts = {
   f: 4
 };
 
+const bits = {
+  '0': [0, 0, 0, 0],
+  '1': [0, 0, 0, 1],
+  '2': [0, 0, 1, 0],
+  '3': [0, 0, 1, 1],
+  '4': [0, 1, 0, 0],
+  '5': [0, 1, 0, 1],
+  '6': [0, 1, 1, 0],
+  '7': [0, 1, 1, 1],
+  '8': [1, 0, 0, 0],
+  '9': [1, 0, 0, 1],
+  a: [1, 0, 1, 0],
+  b: [1, 0, 1, 1],
+  c: [1, 1, 0, 0],
+  d: [1, 1, 0, 1],
+  e: [1, 1, 1, 0],
+  f: [1, 1, 1, 1]
+};
+
 const hashbitcount = function(hash) {
   var sum = 0;
   for (var i = 0; i < hash.length; i++) {
     sum += bitcounts[hash[i]];
   }
   return sum;
+};
+
+const buildgrid = function(input) {
+  var result = [];
+  for (var i = 0; i < 128; i++) {
+    var row = [];
+    var hash = knothash2(input + '-' + i);
+    for (var j = 0; j < 32; j++) {
+      for (var k in bits[hash[j]]) {
+        row.push(bits[hash[j]][k]);
+      }
+    }
+    result.push(row);
+  }
+  return result;
+};
+
+const neighbors = function(point, grid) {
+  var n = [];
+  n.push([point[0] - 1, point[1]]);
+  n.push([point[0] + 1, point[1]]);
+  n.push([point[0], point[1] - 1]);
+  n.push([point[0], point[1] + 1]);
+  n = n.filter(function(p) {
+    return (
+      p[0] >= 0 && p[0] < 128 && p[1] >= 0 && p[1] < 128 && grid[p[0]][p[1]]
+    );
+  });
+  return n;
+};
+
+const buildgroup = function(point, grid, group, allpoints) {
+  group.add(point);
+  allpoints.remove(point);
+  var n = neighbors(point, grid);
+  for (var i in n) {
+    if (!group.contains(n[i])) {
+      buildgroup(n[i], grid, group, allpoints);
+    }
+  }
+};
+
+const findgroups = function(grid) {
+  var allpoints = new treeset();
+  var groups = [];
+  for (var i = 0; i < 128; i++) {
+    for (var j = 0; j < 128; j++) {
+      if (grid[i][j]) {
+        allpoints.add([i, j]);
+      }
+    }
+  }
+  while (allpoints.size() > 0) {
+    var iterator = allpoints.iterator();
+    var point = iterator.next();
+    var group = new treeset();
+    buildgroup(point, grid, group, allpoints);
+    groups.push(group);
+  }
+  return groups;
 };
 
 const solution1 = function(input) {
@@ -87,7 +168,9 @@ const solution1 = function(input) {
 };
 
 const solution2 = function(input) {
-  return '';
+  var grid = buildgrid(input);
+  var groups = findgroups(grid);
+  return groups.length;
 };
 
 const advent14 = function(callback) {
