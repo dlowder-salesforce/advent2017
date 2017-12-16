@@ -67,10 +67,10 @@ describe('advent tests', () => {
   test('Day 12', done => {
     days[11](output => check_results(11, output, done));
   });
-// This one is really slow, so comment it out for now
-//  test('Day 13', done => {
-//    days[12](output => check_results(12, output, done));
-//  });
+  // This one is really slow, so comment it out for now
+  //  test('Day 13', done => {
+  //    days[12](output => check_results(12, output, done));
+  //  });
   test('Day 14', done => {
     days[13](output => check_results(13, output, done));
   });

@@ -2,34 +2,7 @@
  * Knot hash code used in days 10 and 14
  */
 
-Object.defineProperty(Array.prototype, 'rotate_n', {
-  enumerable: false,
-  value: function rotate_n(n) {
-    return this.slice(n, this.length).concat(this.slice(0, n));
-  }
-});
-
-Object.defineProperty(Array.prototype, 'reverse_n', {
-  enumerable: false,
-  value: function reverse_n(n) {
-    return this.slice(0, n)
-      .map(function(s, i, a) {
-        return a[n - i - 1];
-      })
-      .concat(this.slice(n, this.length));
-  }
-});
-
-Object.defineProperty(Array, 'range', {
-  enumerable: false,
-  value: function range(n) {
-    var result = [];
-    for (var i = 0; i < n; i++) {
-      result.push(i);
-    }
-    return result;
-  }
-});
+require('./arrayprototypes');
 
 const xorstring = function(list) {
   var a = [];
