@@ -91,38 +91,80 @@ const solution1 = function(input) {
 };
 
 const solution2 = function(input) {
-  var i, j;
+  var i, j, k, t;
   var { p, v, a } = init_particles(input);
   var set = new treeset();
   for (i = 0; i < input.length; i++) {
     set.add('' + i);
   }
 
-  var t = 0;
-  while (t < 1000) {
-    t++;
-    for (i = 0; i < input.length; i++) {
-      v[i][0] += a[i][0];
-      v[i][1] += a[i][1];
-      v[i][2] += a[i][2];
-      p[i][0] += v[i][0];
-      p[i][1] += v[i][1];
-      p[i][2] += v[i][2];
-    }
-    for (var i1 = 0; i1 < input.length - 1; i1++) {
-      for (var i2 = i1 + 1; i2 < input.length; i2++) {
-        if (
-          i1 !== i2 &&
-          p[i1][0] === p[i2][0] &&
-          p[i1][1] === p[i2][1] &&
-          p[i1][2] === p[i2][2]
-        ) {
-          set.remove('' + i1);
-          set.remove('' + i2);
+  var collisions = [];
+  for (i = 0; i < input.length - 1; i++) {
+    for (j = i + 1; j < input.length; j++) {
+      var tmatch = [[], [], []];
+      for (k = 0; k < 3; k++) {
+        // Solve for each coordinate k to find at least one time > 0
+        // when two particles have equal position
+        var A = (a[i][k] - a[j][k]) / 2;
+        var B = v[i][k] - v[j][k] + A;
+        var C = p[i][k] - p[j][k];
+        if (A === 0) {
+          if (B !== 0) {
+            t = -C / B;
+            if (t > 0 && Number.isInteger(t)) {
+              tmatch[k].push(t);
+            }
+          }
+        } else {
+          var det = B * B - 4 * A * C;
+          if (det >= 0) {
+            t = (-B + Math.sqrt(det)) / (2 * A);
+            if (t > 0 && Number.isInteger(t)) {
+              tmatch[k].push(t);
+            }
+            t = (-B - Math.sqrt(det)) / (2 * A);
+            if (t > 0 && Number.isInteger(t)) {
+              tmatch[k].push(t);
+            }
+          }
+        }
+      }
+      if (tmatch[0].length && tmatch[1].length && tmatch[2].length) {
+        // see if we have a time when all three conditions are satisfied
+        for (var i0 in tmatch[0]) {
+          for (var i1 in tmatch[1]) {
+            for (var i2 in tmatch[2]) {
+              if (
+                tmatch[0][i0] === tmatch[1][i1] &&
+                tmatch[1][i1] === tmatch[2][i2]
+              ) {
+                collisions.push({
+                  i: '' + i,
+                  j: '' + j,
+                  t: tmatch[0][i0]
+                });
+              }
+            }
+          }
         }
       }
     }
   }
+
+  // Sort the collisions by time
+  collisions.sort((a, b) => (a.t < b.t ? -1 : 1));
+
+  var t_current = -1;
+  for (k = 0; k < collisions.length; k++) {
+    // if set still contains these particles, they really collided
+    // so remove them.
+    if (set.contains(collisions[k].i) || set.contains(collisions[k].j)) {
+      set.remove(collisions[k].i);
+      set.remove(collisions[k].j);
+    }
+    t_current = collisions[k].t;
+  }
+
   return set.size();
 };
 
