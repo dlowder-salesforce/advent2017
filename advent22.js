@@ -4,20 +4,12 @@
 
 const io = require('./utils/io');
 
-const solution1 = function(input) {
-  return '';
-};
-
-const solution2 = function(input) {
-  return '';
-};
-
 const initial_infected_nodes = function(input) {
   var map = {};
   for (var j = 0; j < input.length; j++) {
     for (var i = 0; i < input[j].length; i++) {
       if (input[j][i] === '#') {
-        map[[i, j]] = 1;
+        map[[i, j]] = '#';
       }
     }
   }
@@ -50,6 +42,19 @@ const right_turn = function(dir) {
   }
 };
 
+const reverse = function(dir) {
+  switch (dir) {
+    case 'u':
+      return 'd';
+    case 'l':
+      return 'r';
+    case 'd':
+      return 'u';
+    case 'r':
+      return 'l';
+  }
+};
+
 const next_pos = function(pos, dir) {
   switch (dir) {
     case 'd':
@@ -67,29 +72,65 @@ const burst = function(infected, state) {
   if (infected[state.pos]) {
     delete infected[state.pos];
     state.dir = right_turn(state.dir);
-    state.pos = next_pos(state.pos, state.dir);
   } else {
-    infected[state.pos] = 1;
+    infected[state.pos] = '#';
     state.ninfections = state.ninfections + 1;
     state.dir = left_turn(state.dir);
-    state.pos = next_pos(state.pos, state.dir);
   }
+  state.pos = next_pos(state.pos, state.dir);
+};
+
+const burst2 = function(infected, state) {
+  switch (infected[state.pos]) {
+    case '#':
+      infected[state.pos] = 'F';
+      state.dir = right_turn(state.dir);
+      break;
+    case 'F':
+      delete infected[state.pos];
+      state.dir = reverse(state.dir);
+      break;
+    case 'W':
+      infected[state.pos] = '#';
+      state.ninfections = state.ninfections + 1;
+      break;
+    default:
+      infected[state.pos] = 'W';
+      state.dir = left_turn(state.dir);
+      break;
+  }
+  state.pos = next_pos(state.pos, state.dir);
+};
+
+const solution1 = function(input) {
+  var infected = initial_infected_nodes(input);
+  var state = {
+    pos: [Math.floor(input.length / 2), Math.floor(input.length / 2)],
+    dir: 'u',
+    ninfections: 0
+  };
+  for (var i = 0; i < 10000; i++) {
+    burst(infected, state);
+  }
+  return state.ninfections;
+};
+
+const solution2 = function(input) {
+  var infected = initial_infected_nodes(input);
+  var state = {
+    pos: [Math.floor(input.length / 2), Math.floor(input.length / 2)],
+    dir: 'u',
+    ninfections: 0
+  };
+  for (var i = 0; i < 10000000; i++) {
+    burst2(infected, state);
+  }
+  return state.ninfections;
 };
 
 const advent22 = function(callback) {
   io.readInputAsLines('./input22.txt', function(input) {
-    //input = ['..#', '#..', '...'];
-    var infected = initial_infected_nodes(input);
-    var state = {
-      pos: [Math.floor(input.length / 2), Math.floor(input.length / 2)],
-      dir: 'u',
-      ninfections: 0,
-    };
-    for (var i = 0; i < 10000; i++) {
-      burst(infected, state);
-    }
-
-    let output = 'Day 22: ' + state.ninfections + ' ' + solution2(input);
+    let output = 'Day 22: ' + solution1(input) + ' ' + solution2(input);
     callback && callback(output);
   });
 };
