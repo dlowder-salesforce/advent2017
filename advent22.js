@@ -178,12 +178,30 @@ Given your actual map, after 10000000 bursts of activity, how many bursts cause 
 
 const io = require('./utils/io');
 
+const map_middle = 5000;
+const map_size = 10001;
+
+const get_node = function(infected, pos) {
+  return infected[pos[1] + map_middle][pos[0] + map_middle];
+};
+
+const set_node = function(infected, pos, value) {
+  infected[pos[1] + map_middle][pos[0] + map_middle] = value;
+};
+
 const initial_infected_nodes = function(input) {
-  var map = {};
+  var map = [];
+  for (var j = 0; j < map_size; j++) {
+    var row = [];
+    for (var i = 0; i < map_size; i++) {
+      row.push(0);
+    }
+    map.push(row);
+  }
   for (var j = 0; j < input.length; j++) {
     for (var i = 0; i < input[j].length; i++) {
       if (input[j][i] === '#') {
-        map[[i, j]] = '#';
+        set_node(map, [i, j], '#');
       }
     }
   }
@@ -191,63 +209,28 @@ const initial_infected_nodes = function(input) {
 };
 
 const left_turn = function(dir) {
-  switch (dir) {
-    case 'u':
-      return 'l';
-    case 'l':
-      return 'd';
-    case 'd':
-      return 'r';
-    case 'r':
-      return 'u';
-  }
+  return (dir + 1) % 4;
 };
 
 const right_turn = function(dir) {
-  switch (dir) {
-    case 'u':
-      return 'r';
-    case 'l':
-      return 'u';
-    case 'd':
-      return 'l';
-    case 'r':
-      return 'd';
-  }
+  return (dir + 3) % 4;
 };
 
 const reverse = function(dir) {
-  switch (dir) {
-    case 'u':
-      return 'd';
-    case 'l':
-      return 'r';
-    case 'd':
-      return 'u';
-    case 'r':
-      return 'l';
-  }
+  return (dir + 2) % 4;
 };
 
 const next_pos = function(pos, dir) {
-  switch (dir) {
-    case 'd':
-      return [pos[0], pos[1] + 1];
-    case 'u':
-      return [pos[0], pos[1] - 1];
-    case 'l':
-      return [pos[0] - 1, pos[1]];
-    case 'r':
-      return [pos[0] + 1, pos[1]];
-  }
+  const dir_vectors = [[1, 0], [0, 1], [-1, 0], [0, -1]];
+  return [pos[0] + dir_vectors[dir][0], pos[1] - dir_vectors[dir][1]];
 };
 
 const burst = function(infected, state) {
-  if (infected[state.pos]) {
-    delete infected[state.pos];
+  if (get_node(infected, state.pos)) {
+    set_node(infected, state.pos, null);
     state.dir = right_turn(state.dir);
   } else {
-    infected[state.pos] = '#';
+    set_node(infected, state.pos, '#');
     state.ninfections = state.ninfections + 1;
     state.dir = left_turn(state.dir);
   }
@@ -255,21 +238,21 @@ const burst = function(infected, state) {
 };
 
 const burst2 = function(infected, state) {
-  switch (infected[state.pos]) {
+  switch (get_node(infected, state.pos)) {
     case '#':
-      infected[state.pos] = 'F';
+      set_node(infected, state.pos, 'F');
       state.dir = right_turn(state.dir);
       break;
     case 'F':
-      delete infected[state.pos];
+      set_node(infected, state.pos, null);
       state.dir = reverse(state.dir);
       break;
     case 'W':
-      infected[state.pos] = '#';
+      set_node(infected, state.pos, '#');
       state.ninfections = state.ninfections + 1;
       break;
     default:
-      infected[state.pos] = 'W';
+      set_node(infected, state.pos, 'W');
       state.dir = left_turn(state.dir);
       break;
   }
@@ -280,7 +263,7 @@ const solution1 = function(input) {
   var infected = initial_infected_nodes(input);
   var state = {
     pos: [Math.floor(input.length / 2), Math.floor(input.length / 2)],
-    dir: 'u',
+    dir: 1,
     ninfections: 0
   };
   for (var i = 0; i < 10000; i++) {
@@ -293,7 +276,7 @@ const solution2 = function(input) {
   var infected = initial_infected_nodes(input);
   var state = {
     pos: [Math.floor(input.length / 2), Math.floor(input.length / 2)],
-    dir: 'u',
+    dir: 1,
     ninfections: 0
   };
   for (var i = 0; i < 10000000; i++) {
