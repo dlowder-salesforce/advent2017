@@ -5,186 +5,251 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Integrated Terminal/Console",
+      "type": "python",
+      "request": "launch",
+      "stopOnEntry": true,
+      "pythonPath": "${config:python.pythonPath}",
+      "program": "${file}",
+      "cwd": "",
+      "console": "integratedTerminal",
+      "env": {},
+      "envFile": "${workspaceFolder}/.env",
+      "debugOptions": []
+    },
+    {
       "type": "node",
       "request": "launch",
       "name": "Run all",
       "program": "${workspaceFolder}/index.js",
-      "args": ["all"]
+      "args": [
+        "all"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 1",
       "program": "${workspaceFolder}/index.js",
-      "args": ["1"]
+      "args": [
+        "1"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 2",
       "program": "${workspaceFolder}/index.js",
-      "args": ["2"]
+      "args": [
+        "2"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 3",
       "program": "${workspaceFolder}/index.js",
-      "args": ["3"]
+      "args": [
+        "3"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 4",
       "program": "${workspaceFolder}/index.js",
-      "args": ["4"]
+      "args": [
+        "4"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 5",
       "program": "${workspaceFolder}/index.js",
-      "args": ["5"]
+      "args": [
+        "5"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 6",
       "program": "${workspaceFolder}/index.js",
-      "args": ["6"]
+      "args": [
+        "6"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 7",
       "program": "${workspaceFolder}/index.js",
-      "args": ["7"]
+      "args": [
+        "7"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 8",
       "program": "${workspaceFolder}/index.js",
-      "args": ["8"]
+      "args": [
+        "8"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 9",
       "program": "${workspaceFolder}/index.js",
-      "args": ["9"]
+      "args": [
+        "9"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 10",
       "program": "${workspaceFolder}/index.js",
-      "args": ["10"]
+      "args": [
+        "10"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 11",
       "program": "${workspaceFolder}/index.js",
-      "args": ["11"]
+      "args": [
+        "11"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 12",
       "program": "${workspaceFolder}/index.js",
-      "args": ["12"]
+      "args": [
+        "12"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 13",
       "program": "${workspaceFolder}/index.js",
-      "args": ["13"]
+      "args": [
+        "13"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 14",
       "program": "${workspaceFolder}/index.js",
-      "args": ["14"]
+      "args": [
+        "14"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 15",
       "program": "${workspaceFolder}/index.js",
-      "args": ["15"]
+      "args": [
+        "15"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 16",
       "program": "${workspaceFolder}/index.js",
-      "args": ["16"]
+      "args": [
+        "16"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 17",
       "program": "${workspaceFolder}/index.js",
-      "args": ["17"]
+      "args": [
+        "17"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 18",
       "program": "${workspaceFolder}/index.js",
-      "args": ["18"]
+      "args": [
+        "18"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 19",
       "program": "${workspaceFolder}/index.js",
-      "args": ["19"]
+      "args": [
+        "19"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 20",
       "program": "${workspaceFolder}/index.js",
-      "args": ["20"]
+      "args": [
+        "20"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 21",
       "program": "${workspaceFolder}/index.js",
-      "args": ["21"]
+      "args": [
+        "21"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 22",
       "program": "${workspaceFolder}/index.js",
-      "args": ["22"]
+      "args": [
+        "22"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 23",
       "program": "${workspaceFolder}/index.js",
-      "args": ["23"]
+      "args": [
+        "23"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 24",
       "program": "${workspaceFolder}/index.js",
-      "args": ["24"]
+      "args": [
+        "24"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Day 25",
       "program": "${workspaceFolder}/index.js",
-      "args": ["25"]
+      "args": [
+        "25"
+      ]
     }
   ]
 }

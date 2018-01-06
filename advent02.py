@@ -1,4 +1,4 @@
-/*
+'''
 --- Day 2: Corruption Checksum ---
 
 As you walk through the door, a glowing humanoid shape yells in your 
@@ -51,50 +51,35 @@ In the third row, the result is 2.
 In this example, the sum of the results would be 4 + 3 + 2 = 9.
 
 What is the sum of each row's result in your puzzle input?
- */
+'''
 
-const io = require('./utils/io');
+def find_divisible_numbers_and_divide(a):
+  for i in range(len(a) - 1):
+    for j in range(i+1,len(a)):
+      n = max([a[i],a[j]])
+      m = min([a[i],a[j]])
+      if n % m == 0:
+        return n/m
+  return -1
 
-const findDivisibleNumbersAndDivide = function(a) {
-  for (var i = 0; i < a.length - 1; i++) {
-    for (var j = i + 1; j < a.length; j++) {
-      var n = a[i] > a[j] ? a[i] : a[j];
-      var m = a[i] <= a[j] ? a[i] : a[j];
-      if (Math.floor(n / m) * m === n) {
-        return n / m;
-      }
-    }
-  }
-  return -1;
-};
+def solution1(inputArrays):
+  sum = 0
+  for a in inputArrays:
+    sum += max(a) - min(a)
+  return sum
 
-const solution1 = function(inputArrays) {
-  return inputArrays
-    .map(
-      x =>
-        x.reduce((i, j) => (i > j ? i : j)) -
-        x.reduce((i, j) => (i < j ? i : j))
-    )
-    .reduce((a, b) => a + b);
-};
+def solution2(inputArrays):
+  sum = 0
+  for a in inputArrays:
+    sum += find_divisible_numbers_and_divide(a)
+  return sum
 
-const solution2 = function(inputArrays) {
-  return inputArrays
-    .map(x => findDivisibleNumbersAndDivide(x))
-    .reduce((a, b) => a + b);
-};
 
-const advent02 = function(callback) {
-  io.readInputAsLines('./input02.txt', function(input) {
-    var inputArrays = input.map(function(line) {
-      return line.split('\t').map(function(x) {
-        return parseInt(x);
-      });
-    });
-    var output =
-      'Day 2: ' + solution1(inputArrays) + ' ' + solution2(inputArrays);
-    callback && callback(output);
-  });
-};
+input_file = open("input02.txt", 'r')
+lines = input_file.readlines()
+inputArrays = []
+for l in lines:
+  inputArrays.append([int(x) for x in l.split('\t')])
 
-module.exports = advent02;
+print(solution1(inputArrays))
+print(solution2(inputArrays))
