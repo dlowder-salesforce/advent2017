@@ -53,33 +53,30 @@ In this example, the sum of the results would be 4 + 3 + 2 = 9.
 What is the sum of each row's result in your puzzle input?
 '''
 
+
 def find_divisible_numbers_and_divide(a):
-  for i in range(len(a) - 1):
-    for j in range(i+1,len(a)):
-      n = max([a[i],a[j]])
-      m = min([a[i],a[j]])
-      if n % m == 0:
-        return n/m
-  return -1
+    for i in range(len(a) - 1):
+        for j in range(i + 1, len(a)):
+            n = max([a[i], a[j]])
+            m = min([a[i], a[j]])
+            if n % m == 0:
+                return n / m
+    return -1
+
 
 def solution1(inputArrays):
-  sum = 0
-  for a in inputArrays:
-    sum += max(a) - min(a)
-  return sum
+    return sum(max(a) - min(a) for a in inputArrays)
+
 
 def solution2(inputArrays):
-  sum = 0
-  for a in inputArrays:
-    sum += find_divisible_numbers_and_divide(a)
-  return sum
+    return sum([find_divisible_numbers_and_divide(a) for a in inputArrays])
 
 
 input_file = open("input02.txt", 'r')
 lines = input_file.readlines()
 inputArrays = []
 for l in lines:
-  inputArrays.append([int(x) for x in l.split('\t')])
+    inputArrays.append([int(x) for x in l.split('\t')])
 
 print(solution1(inputArrays))
 print(solution2(inputArrays))
