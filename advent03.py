@@ -58,15 +58,15 @@ What is the first value written that is larger than your puzzle input?
 
 input = 361527
 
+
 def hash(loc):
     return str(1000 * loc[0] + loc[1] + 5000)
 
 
 def sum_of_adjacent_squares(squares, loc):
-    locs = [[loc[0] - 1, loc[1] - 1], [loc[0], loc[1] - 1], [
-        loc[0] + 1, loc[1] - 1
-    ], [loc[0] - 1, loc[1]], [loc[0] + 1, loc[1]], [loc[0] - 1, loc[1] + 1],
-            [loc[0], loc[1] + 1], [loc[0] + 1, loc[1] + 1]]
+    locs = [[loc[0] + i, loc[1] + j]
+            for i in range(-1, 2) for j in range(-1, 2)
+            if not (i == 0 and j == 0)]
     return sum([squares.get(hash(l), 0) for l in locs])
 
 
