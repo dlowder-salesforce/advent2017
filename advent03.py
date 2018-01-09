@@ -58,6 +58,50 @@ What is the first value written that is larger than your puzzle input?
 
 input = 361527
 
+def hash(loc):
+    return str(1000 * loc[0] + loc[1] + 5000)
+
+
+def sum_of_adjacent_squares(squares, loc):
+    locs = [[loc[0] - 1, loc[1] - 1], [loc[0], loc[1] - 1], [
+        loc[0] + 1, loc[1] - 1
+    ], [loc[0] - 1, loc[1]], [loc[0] + 1, loc[1]], [loc[0] - 1, loc[1] + 1],
+            [loc[0], loc[1] + 1], [loc[0] + 1, loc[1] + 1]]
+    return sum([squares.get(hash(l), 0) for l in locs])
+
+
+def move(loc, direction):
+    return [loc[0] + direction[0], loc[1] + direction[1]]
+
+
+def solution2():
+    directions = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+    squares = {}
+    loc = [0, 0]
+    distance = 1
+    direction_counter = 2
+    direction_index = 0
+    distance_counter = distance
+    squares[hash(loc)] = 1
+    # Start at center, move 1 square, turn left, move 1 square, turn left,
+    #                  move 2 squares, turn left, move 2 squares, turn left,
+    #                  move 3 squares, turn left, move 3 squares, turn left,
+    # ....
+    # Keep computing adjacent square sums until it exceeds input, then return
+    # the last sum computed
+    while sum_of_adjacent_squares(squares, loc) <= input:
+        loc = move(loc, directions[direction_index])
+        squares[hash(loc)] = sum_of_adjacent_squares(squares, loc)
+        distance_counter -= 1
+        if distance_counter == 0:
+            direction_index = (direction_index + 1) % 4
+            direction_counter -= 1
+            if direction_counter == 0:
+                direction_counter = 2
+                distance += 1
+            distance_counter = distance
+    return sum_of_adjacent_squares(squares, loc)
+
 
 def solution1():
     i = 1
@@ -68,8 +112,9 @@ def solution1():
                 return 2 * int(i / 2)
             while corner >= input:
                 corner -= i - 1
-            return i / 2 + abs(corner + (i / 2) - input)
+            return int(i / 2 + abs(corner + (i / 2) - input))
         i += 2
 
 
 print(solution1())
+print(solution2())

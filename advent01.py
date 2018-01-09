@@ -73,7 +73,10 @@ def index_to_compare2(digits, i):
 
 
 def solution(digits, index_function):
-    return sum([digits[i] for i in range(len(digits)) if digits[i] == digits[index_function(digits, i)]])
+    return sum([
+        digits[i] for i in range(len(digits))
+        if digits[i] == digits[index_function(digits, i)]
+    ])
 
 
 input_file = open("input01.txt", 'r')
